@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="hero">
+
+<h1>AI Meeting Notes Summarizer</h1>
+
+<p>
+Upload your meeting audio and get an AI-generated summary in seconds.
+</p>
+
+<a href="/upload"
+class="btn btn-primary btn-lg mt-3">
+
+Upload Meeting
+
+</a>
+
+</div>
+
+<hr>
+
+<h3 class="mt-5">
+
+Recent Meetings
+
+</h3>
+
+<div class="row">
+
+{% for meeting in meetings %}
+
+<div class="col-md-4">
+
+<div class="card shadow mt-4">
+
+<div class="card-body">
+
+<h5>{{ meeting.filename }}</h5>
+
+<p>
+
+{{ meeting.created_at }}
+
+</p>
+
+<a href="/result/{{meeting.id}}"
+class="btn btn-success">
+
+View Summary
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

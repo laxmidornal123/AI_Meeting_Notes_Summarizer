@@ -1,0 +1,172 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="fade-in">
+
+    <!-- Header -->
+
+    <div class="hero">
+
+        <h1>🤖 AI Analysis Completed</h1>
+
+        <p>
+            Your meeting has been successfully processed.
+        </p>
+
+    </div>
+
+    <!-- Transcript -->
+
+    <div class="transcript-card mb-4">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h3>
+
+                <i class="bi bi-mic-fill"></i>
+
+                Transcript
+
+            </h3>
+
+            <span class="badge-custom">
+
+                Speech to Text
+
+            </span>
+
+        </div>
+
+        <hr>
+
+        <pre>{{ transcript }}</pre>
+
+    </div>
+
+    <!-- Summary -->
+
+    <div class="summary-card mb-4">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h3>
+
+                <i class="bi bi-stars"></i>
+
+                AI Summary
+
+            </h3>
+
+            <span class="badge-custom">
+
+                Generated
+
+            </span>
+
+        </div>
+
+        <hr>
+
+        <p>
+
+            {{ summary }}
+
+        </p>
+
+    </div>
+
+    <!-- Action Cards -->
+
+    <div class="row g-4">
+
+        <div class="col-lg-6">
+
+            <div class="glass p-4 h-100">
+
+                <h4>
+
+                    📌 Key Points
+
+                </h4>
+
+                <hr>
+
+                <ul>
+
+                    <li>Meeting successfully transcribed.</li>
+
+                    <li>AI generated summary.</li>
+
+                    <li>Ready for PDF export.</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="glass p-4 h-100">
+
+                <h4>
+
+                    ✅ Action Items
+
+                </h4>
+
+                <hr>
+
+                <ul>
+
+                    <li>Review AI Summary.</li>
+
+                    <li>Download PDF.</li>
+
+                    <li>Share with your team.</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Buttons -->
+
+    <div class="text-center mt-5">
+
+        <a href="{{ url_for('history.download_report', id=meeting.id) }}"
+           class="btn btn-success m-2">
+
+            <i class="bi bi-download"></i>
+
+            Download PDF
+
+        </a>
+
+        <a href="{{ url_for('upload.upload') }}"
+           class="btn btn-primary m-2">
+
+            <i class="bi bi-cloud-upload-fill"></i>
+
+            Upload Another
+
+        </a>
+
+        <a href="{{ url_for('history.history') }}"
+           class="btn btn-warning m-2">
+
+            <i class="bi bi-clock-history"></i>
+
+            History
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

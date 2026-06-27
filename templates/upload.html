@@ -1,0 +1,166 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="fade-in">
+
+    <div class="hero">
+
+        <h1>🎤 Upload Meeting Audio</h1>
+
+        <p>
+            Upload your meeting recording and let AI generate
+            transcript, summary, action items and PDF report.
+        </p>
+
+    </div>
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="glass p-4">
+
+                <form method="POST"
+                      enctype="multipart/form-data"
+                      id="uploadForm">
+
+                    <!-- Upload Box -->
+
+                    <label class="upload-box" id="drop-area">
+
+                        <i class="bi bi-cloud-arrow-up-fill floating"></i>
+
+                        <h3>Drag & Drop Audio Here</h3>
+
+                        <p>
+
+                            Supports MP3, WAV, M4A, OGG, FLAC
+
+                        </p>
+
+                        <input
+                            type="file"
+                            name="audio"
+                            id="audio"
+                            accept=".mp3,.wav,.m4a,.ogg,.flac"
+                            required>
+
+                        <span class="file-label">
+
+                            Choose Audio File
+
+                        </span>
+
+                    </label>
+
+                    <!-- Selected File -->
+
+                    <div class="mt-4 text-center">
+
+                        <h5 id="filename">
+
+                            No file selected
+
+                        </h5>
+
+                    </div>
+
+                    <!-- Upload Button -->
+
+                    <div class="d-grid mt-4">
+
+                        <button
+                            class="btn btn-primary btn-lg"
+                            id="uploadBtn">
+
+                            <i class="bi bi-stars"></i>
+
+                            Upload & Generate Summary
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Loading Modal -->
+
+<div class="modal fade"
+     id="loadingModal"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content bg-dark text-white">
+
+            <div class="modal-body text-center p-5">
+
+                <div class="spinner-ai mb-4"></div>
+
+                <h4>
+
+                    AI is processing your meeting...
+
+                </h4>
+
+                <p>
+
+                    Transcribing audio...
+
+                    <br>
+
+                    Generating summary...
+
+                    <br>
+
+                    Please wait.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const input=document.getElementById("audio");
+
+const filename=document.getElementById("filename");
+
+const form=document.getElementById("uploadForm");
+
+input.onchange=function(){
+
+if(this.files.length>0){
+
+filename.innerHTML="📄 "+this.files[0].name;
+
+}
+
+}
+
+form.onsubmit=function(){
+
+let modal=new bootstrap.Modal(document.getElementById("loadingModal"));
+
+modal.show();
+
+}
+
+</script>
+
+{% endblock %}
