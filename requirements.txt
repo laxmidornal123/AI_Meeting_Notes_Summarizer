@@ -56,3 +56,4 @@ typer==0.25.1
 typing_extensions==4.15.0
 urllib3==2.7.0
 Werkzeug==3.0.3
+gunicorn==23.0.0
