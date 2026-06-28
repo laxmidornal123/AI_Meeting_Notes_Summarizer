@@ -1,0 +1,243 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
+
+    <div class="row w-100 justify-content-center">
+
+        <div class="col-lg-5 col-md-7 col-sm-10">
+
+            <div class="glass shadow-lg p-5 rounded-4">
+
+                <div class="text-center mb-4">
+
+                    <i class="bi bi-person-plus-fill display-1 text-primary"></i>
+
+                    <h2 class="fw-bold mt-3">
+
+                        Create Account
+
+                    </h2>
+
+                    <p class="text-muted">
+
+                        Join AI Meeting Notes Summarizer
+
+                    </p>
+
+                </div>
+
+                <form method="POST">
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Username
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="username"
+                            class="form-control"
+                            placeholder="Enter Username"
+                            required>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Email
+
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            placeholder="Enter Email"
+                            required>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Password
+
+                        </label>
+
+                        <div class="input-group">
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="form-control"
+                                placeholder="Enter Password"
+                                onkeyup="checkStrength()"
+                                required>
+
+                            <button
+                                type="button"
+                                class="btn btn-outline-light"
+                                onclick="togglePassword('password')">
+
+                                <i class="bi bi-eye-fill"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Confirm Password
+
+                        </label>
+
+                        <div class="input-group">
+
+                            <input
+                                type="password"
+                                id="confirm_password"
+                                name="confirm_password"
+                                class="form-control"
+                                placeholder="Confirm Password"
+                                required>
+
+                            <button
+                                type="button"
+                                class="btn btn-outline-light"
+                                onclick="togglePassword('confirm_password')">
+
+                                <i class="bi bi-eye-fill"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Password Strength -->
+
+                    <div class="progress mb-3">
+
+                        <div id="strengthBar"
+                             class="progress-bar"
+                             style="width:0%">
+
+                        </div>
+
+                    </div>
+
+                    <small id="strengthText"
+                           class="text-muted">
+
+                        Password Strength
+
+                    </small>
+
+                    <button
+                        class="btn btn-primary w-100 mt-4">
+
+                        <i class="bi bi-person-check-fill"></i>
+
+                        Register
+
+                    </button>
+
+                </form>
+
+                <hr>
+
+                <div class="text-center">
+
+                    Already have an account?
+
+                    <a href="{{ url_for('auth.login') }}">
+
+                        Login
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function togglePassword(id){
+
+let x=document.getElementById(id);
+
+if(x.type==="password")
+
+x.type="text";
+
+else
+
+x.type="password";
+
+}
+
+function checkStrength(){
+
+let pass=document.getElementById("password").value;
+
+let bar=document.getElementById("strengthBar");
+
+let text=document.getElementById("strengthText");
+
+let score=0;
+
+if(pass.length>=8) score++;
+
+if(/[A-Z]/.test(pass)) score++;
+if(/[a-z]/.test(pass)) score++;
+if(/[0-9]/.test(pass)) score++;
+if(/[^A-Za-z0-9]/.test(pass)) score++;
+
+if(score<=2){
+
+bar.style.width="30%";
+bar.style.background="#EF4444";
+text.innerHTML="Weak Password";
+
+}
+
+else if(score<=4){
+
+bar.style.width="70%";
+bar.style.background="#F59E0B";
+text.innerHTML="Medium Password";
+
+}
+
+else{
+
+bar.style.width="100%";
+bar.style.background="#10B981";
+text.innerHTML="Strong Password";
+
+}
+
+}
+
+</script>
+
+{% endblock %}

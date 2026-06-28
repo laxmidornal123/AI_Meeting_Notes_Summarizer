@@ -1,0 +1,381 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="fade-in">
+
+    <!-- Hero -->
+
+    <div class="hero">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-8">
+
+                <h1>
+                    👋 Welcome {{ current_user.username }}
+                </h1>
+
+                <p>
+
+                    Upload meeting recordings, generate AI transcripts,
+                    summaries, action items and downloadable PDF reports.
+
+                </p>
+
+                <a href="{{ url_for('upload.upload') }}"
+                   class="btn btn-light mt-3">
+
+                    <i class="bi bi-cloud-upload-fill"></i>
+
+                    Upload Meeting
+
+                </a>
+
+            </div>
+
+            <div class="col-lg-4 text-center">
+
+                <i class="bi bi-robot floating"
+                   style="font-size:140px;color:white;"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Statistics -->
+
+    <div class="row g-4">
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stats-card">
+
+                <div class="stats-icon blue">
+
+                    <i class="bi bi-mic-fill"></i>
+
+                </div>
+
+                <h2>{{ total_meetings }}</h2>
+
+                <p>Total Meetings</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stats-card">
+
+                <div class="stats-icon green">
+
+                    <i class="bi bi-file-earmark-pdf-fill"></i>
+
+                </div>
+
+                <h2>{{ total_meetings }}</h2>
+
+                <p>Reports</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stats-card">
+
+                <div class="stats-icon orange">
+
+                    <i class="bi bi-translate"></i>
+
+                </div>
+
+                <h2>AI</h2>
+
+                <p>Language Detection</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stats-card">
+
+                <div class="stats-icon purple">
+
+                    <i class="bi bi-stars"></i>
+
+                </div>
+
+                <h2>100%</h2>
+
+                <p>AI Powered</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Analytics -->
+
+    <div class="glass mt-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+           <div class="glass mt-4">
+    <h3><i class="bi bi-bar-chart-fill"></i> Monthly Analytics</h3>
+
+    <canvas id="meetingChart" height="120"></canvas>
+</div>
+
+        </div>
+
+        <canvas id="meetingChart" height="90"></canvas>
+
+    </div>
+    <!-- Recent Meetings -->
+
+    <div class="glass mt-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h3>
+
+                <i class="bi bi-clock-history"></i>
+
+                Recent Meetings
+
+            </h3>
+
+            <a href="{{ url_for('history.history') }}"
+               class="btn btn-primary">
+
+                View All
+
+            </a>
+
+        </div>
+
+        {% if meetings %}
+
+        <div class="table-responsive">
+
+            <table class="table table-dark align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Filename</th>
+
+                        <th>Date</th>
+
+                        <th>Summary</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for meeting in meetings[:5] %}
+
+                <tr>
+
+                    <td>{{ meeting.id }}</td>
+
+                    <td>
+
+                        <i class="bi bi-file-earmark-music-fill text-primary"></i>
+
+                        {{ meeting.filename }}
+
+                    </td>
+
+                    <td>
+
+                        {{ meeting.upload_date.strftime("%d-%m-%Y") }}
+
+                    </td>
+
+                    <td>
+
+                        {{ meeting.summary[:80] }}...
+
+                    </td>
+
+                    <td>
+
+                        <a href="{{ url_for('history.download_report', id=meeting.id) }}"
+                           class="action-btn action-download"
+                           title="Download PDF">
+
+                            <i class="bi bi-download"></i>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <i class="bi bi-folder2-open"></i>
+
+            <h3>No Meetings Yet</h3>
+
+            <p>
+
+                Upload your first meeting to generate AI summaries.
+
+            </p>
+
+            <a href="{{ url_for('upload.upload') }}"
+               class="btn btn-primary mt-3">
+
+                Upload Meeting
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Chart.js -->
+
+<script>
+
+const ctx = document.getElementById('meetingChart');
+
+new Chart(ctx, {
+
+    type:'bar',
+
+    data:{
+
+        labels:[
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul'
+        ],
+
+        datasets:[{
+
+            label:'Meetings',
+
+            data:[
+                3,
+                5,
+                2,
+                8,
+                6,
+                9,
+                {{ total_meetings }}
+            ],
+
+            backgroundColor:[
+                '#3B82F6',
+                '#6366F1',
+                '#8B5CF6',
+                '#10B981',
+                '#F59E0B',
+                '#EF4444',
+                '#06B6D4'
+            ],
+
+            borderRadius:12
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        plugins:{
+
+            legend:{
+
+                labels:{
+
+                    color:"white"
+
+                }
+
+            }
+
+        },
+
+        scales:{
+
+            x:{
+
+                ticks:{
+
+                    color:"white"
+
+                },
+
+                grid:{
+
+                    color:"#334155"
+
+                }
+
+            },
+
+            y:{
+
+                ticks:{
+
+                    color:"white"
+
+                },
+
+                grid:{
+
+                    color:"#334155"
+
+                }
+
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+{% endblock %}
