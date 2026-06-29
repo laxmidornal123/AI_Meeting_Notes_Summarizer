@@ -1,13 +1,22 @@
 from transformers import pipeline
 
-print("Loading AI Summarizer...")
+summarizer = None
 
-summarizer = pipeline(
-    "summarization",
-    model="facebook/bart-large-cnn"
-)
 
-print("Summarizer Loaded")
+def get_summarizer():
+    global summarizer
+
+    if summarizer is None:
+        print("Loading AI Summarizer...")
+
+        summarizer = pipeline(
+            "summarization",
+            model="sshleifer/distilbart-cnn-12-6"
+        )
+
+        print("Summarizer Loaded")
+
+    return summarizer
 
 
 def summarize_text(text):
@@ -15,7 +24,9 @@ def summarize_text(text):
     if len(text) < 100:
         return text
 
-    result = summarizer(
+    model = get_summarizer()
+
+    result = model(
         text,
         max_length=150,
         min_length=40,
