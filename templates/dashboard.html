@@ -22,7 +22,17 @@
                     summaries, action items and downloadable PDF reports.
 
                 </p>
+                <div class="mt-3">
 
+<span class="badge bg-primary me-2">AI Powered</span>
+
+<span class="badge bg-success me-2">Whisper</span>
+
+<span class="badge bg-warning text-dark me-2">Gemini</span>
+
+<span class="badge bg-danger">PDF Reports</span>
+
+</div>
                 <a href="{{ url_for('upload.upload') }}"
                    class="btn btn-light mt-3">
 
@@ -62,7 +72,10 @@
                 <h2>{{ total_meetings }}</h2>
 
                 <p>Total Meetings</p>
-
+                <small class="text-success">
+<i class="bi bi-arrow-up"></i>
+Latest Data
+</small>
             </div>
 
         </div>
@@ -80,7 +93,10 @@
                 <h2>{{ total_meetings }}</h2>
 
                 <p>Reports</p>
-
+                <small class="text-success">
+<i class="bi bi-arrow-up"></i>
+Latest Data
+</small>
             </div>
 
         </div>
@@ -95,10 +111,18 @@
 
                 </div>
 
-                <h2>AI</h2>
 
-                <p>Language Detection</p>
+<h2>{{ total_meetings }}</h2>
 
+<p>Total Audio Files</p>
+
+<small class="text-success">
+
+<i class="bi bi-arrow-up"></i>
+
+Uploaded Files
+
+</small>
             </div>
 
         </div>
@@ -113,10 +137,15 @@
 
                 </div>
 
-                <h2>100%</h2>
 
-                <p>AI Powered</p>
+<h2>{{ meetings|length }}</h2>
 
+<p>Recent Uploads</p>
+
+<small class="text-success">
+    <i class="bi bi-clock-history"></i>
+    Latest Activity
+</small>
             </div>
 
         </div>
@@ -124,28 +153,32 @@
     </div>
 
     <!-- Analytics -->
+<div class="card shadow-lg border-0 mt-5">
 
-    <div class="glass mt-5">
+    <div class="card-header bg-primary text-white">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">
 
-           <div class="glass mt-4">
-    <h3><i class="bi bi-bar-chart-fill"></i> Monthly Analytics</h3>
+            <i class="bi bi-bar-chart-fill"></i>
 
-    <canvas id="meetingChart" height="120"></canvas>
-</div>
+            Monthly Analytics
 
-        </div>
-
-        <canvas id="meetingChart" height="90"></canvas>
+        </h4>
 
     </div>
+
+    <div class="card-body">
+
+        <canvas id="meetingChart" height="120"></canvas>
+
+    </div>
+
+</div>
     <!-- Recent Meetings -->
 
-    <div class="glass mt-5">
+<div class="card shadow-lg border-0 mt-5">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-
+<div class="card-header d-flex justify-content-between align-items-center">
             <h3>
 
                 <i class="bi bi-clock-history"></i>
@@ -162,7 +195,7 @@
             </a>
 
         </div>
-
+        <div class="card-body">
         {% if meetings %}
 
         <div class="table-responsive">
@@ -195,7 +228,8 @@
 
                     <td>{{ meeting.id }}</td>
 
-                    <td>
+                    <td class="filename">
+
 
                         <i class="bi bi-file-earmark-music-fill text-primary"></i>
 
@@ -263,6 +297,7 @@
         {% endif %}
 
     </div>
+</div>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

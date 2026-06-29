@@ -1,3 +1,4 @@
+html
 {% extends "layout.html" %}
 
 {% block content %}
@@ -9,6 +10,8 @@
         <div class="col-lg-5 col-md-7 col-sm-10">
 
             <div class="glass shadow-lg p-5 rounded-4">
+
+                <!-- Logo -->
 
                 <div class="text-center mb-4">
 
@@ -26,9 +29,35 @@
 
                     </p>
 
+                    <div class="mb-3">
+
+                        <span class="badge bg-primary me-2">AI Powered</span>
+
+                        <span class="badge bg-success me-2">Whisper</span>
+
+                        <span class="badge bg-warning text-dark me-2">Gemini</span>
+
+                        <span class="badge bg-danger">PDF Reports</span>
+
+                    </div>
+
                 </div>
 
+                <!-- Welcome -->
+
+                <div class="alert alert-primary">
+
+                    <i class="bi bi-info-circle-fill"></i>
+
+                    Securely login to access your AI Meeting Notes Dashboard.
+
+                </div>
+
+                <!-- Login Form -->
+
                 <form method="POST">
+
+                    <!-- Email -->
 
                     <div class="mb-3">
 
@@ -38,14 +67,26 @@
 
                         </label>
 
-                        <input
-                            type="email"
-                            name="email"
-                            class="form-control"
-                            placeholder="Enter Email"
-                            required>
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+
+                                <i class="bi bi-envelope-fill"></i>
+
+                            </span>
+
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control"
+                                placeholder="Enter your email"
+                                required>
+
+                        </div>
 
                     </div>
+
+                    <!-- Password -->
 
                     <div class="mb-3">
 
@@ -57,12 +98,18 @@
 
                         <div class="input-group">
 
+                            <span class="input-group-text">
+
+                                <i class="bi bi-lock-fill"></i>
+
+                            </span>
+
                             <input
                                 type="password"
                                 id="password"
                                 name="password"
                                 class="form-control"
-                                placeholder="Enter Password"
+                                placeholder="Enter your password"
                                 required>
 
                             <button
@@ -78,28 +125,34 @@
 
                     </div>
 
-                    <div class="d-flex justify-content-between mb-4">
+                    <!-- Remember -->
 
-                        <div>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <div class="form-check">
 
                             <input
+                                class="form-check-input"
                                 type="checkbox"
-                                name="remember">
+                                name="remember"
+                                id="remember">
 
-                            Remember Me
+                            <label
+                                class="form-check-label"
+                                for="remember">
+
+                                Remember Me
+
+                            </label>
 
                         </div>
 
-                       <!-- <a href="#">
-
-                            Forgot Password?
-
-                        </a> -->
-
                     </div>
 
+                    <!-- Login Button -->
+
                     <button
-                        class="btn btn-primary w-100">
+                        class="btn btn-primary btn-lg w-100">
 
                         <i class="bi bi-box-arrow-in-right"></i>
 
@@ -110,6 +163,8 @@
                 </form>
 
                 <hr>
+
+                <!-- Register -->
 
                 <div class="text-center">
 
@@ -123,6 +178,16 @@
 
                 </div>
 
+                <hr>
+
+                <!-- Footer -->
+
+                <p class="text-center text-muted small mb-0">
+
+                    AI Meeting Notes Summarizer © 2026
+
+                </p>
+
             </div>
 
         </div>
@@ -135,15 +200,19 @@
 
 function togglePassword(){
 
-let x=document.getElementById("password");
+    let x = document.getElementById("password");
 
-if(x.type==="password")
+    if(x.type === "password"){
 
-x.type="text";
+        x.type = "text";
 
-else
+    }
 
-x.type="password";
+    else{
+
+        x.type = "password";
+
+    }
 
 }
 

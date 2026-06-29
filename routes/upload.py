@@ -27,17 +27,19 @@ def upload():
     if request.method == "POST":
 
         if "audio" not in request.files:
-            flash("Please select an audio file.")
+            flash("Please select an audio file.", "warning")
+
             return render_template("upload.html")
 
         file = request.files["audio"]
 
         if file.filename == "":
-            flash("No file selected.")
+            flash("No file selected.", "warning")
+
             return render_template("upload.html")
 
         if not allowed_file(file.filename):
-            flash("Unsupported file format.")
+            flash("Unsupported file format.", "danger")
             return render_template("upload.html")
 
         filename = secure_filename(file.filename)

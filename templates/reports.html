@@ -1,55 +1,175 @@
+html
 {% extends "layout.html" %}
 
 {% block content %}
 
-<div class="container mt-4">
+<div class="fade-in">
 
-    <h2>
-        <i class="bi bi-file-earmark-pdf-fill"></i>
-        AI Reports
-    </h2>
+    <!-- Hero -->
 
-    <hr>
+    <div class="hero">
+
+        <h1>
+
+            <i class="bi bi-file-earmark-pdf-fill"></i>
+
+            AI Reports
+
+        </h1>
+
+        <p>
+
+            View, search and download all your AI generated meeting reports.
+
+        </p>
+
+    </div>
+
+    <!-- Statistics -->
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-4">
+
+            <div class="stats-card">
+
+                <div class="stats-icon blue">
+
+                    <i class="bi bi-file-earmark-pdf-fill"></i>
+
+                </div>
+
+                <h2>{{ reports|length }}</h2>
+
+                <p>Total Reports</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="stats-card">
+
+                <div class="stats-icon green">
+
+                    <i class="bi bi-download"></i>
+
+                </div>
+
+                <h2>PDF</h2>
+
+                <p>Ready to Download</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="stats-card">
+
+                <div class="stats-icon purple">
+
+                    <i class="bi bi-stars"></i>
+
+                </div>
+
+                <h2>AI</h2>
+
+                <p>Generated Reports</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Search -->
 
     {% if reports %}
 
-    <div class="table-responsive">
+    <div class="glass p-4 mb-4">
 
-        <table class="table table-dark table-hover">
+        <div class="input-group">
 
-            <thead>
+            <span class="input-group-text">
 
-                <tr>
+                <i class="bi bi-search"></i>
 
-                    <th>#</th>
-                    <th>Meeting</th>
-                    <th>Date</th>
-                    <th>Report</th>
+            </span>
 
-                </tr>
+            <input
+                type="text"
+                class="form-control"
+                id="searchInput"
+                placeholder="Search report by filename...">
 
-            </thead>
+        </div>
 
-            <tbody>
+    </div>
 
-            {% for report in reports %}
+    {% endif %}
+
+    <!-- Reports Table -->
+
+    <div class="glass p-4">
+
+        {% if reports %}
+
+        <div class="table-responsive">
+
+            <table
+                class="table table-dark table-hover align-middle"
+                id="reportTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Meeting</th>
+
+                        <th>Date</th>
+
+                        <th>Download</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for report in reports %}
 
                 <tr>
 
                     <td>{{ loop.index }}</td>
 
-                    <td>{{ report.filename }}</td>
+                    <td>
 
-                    <td>{{ report.upload_date.strftime('%d-%m-%Y') }}</td>
+                        <i class="bi bi-file-earmark-music-fill text-primary"></i>
+
+                        {{ report.filename }}
+
+                    </td>
 
                     <td>
 
-                        <a href="{{ url_for('history.download_report', id=report.id) }}"
-                           class="btn btn-success btn-sm">
+                        {{ report.upload_date.strftime('%d-%m-%Y %H:%M') }}
+
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="{{ url_for('history.download_report', id=report.id) }}"
+                            class="btn btn-success btn-sm">
 
                             <i class="bi bi-download"></i>
 
-                            Download PDF
+                            Download
 
                         </a>
 
@@ -57,24 +177,75 @@
 
                 </tr>
 
-            {% endfor %}
+                {% endfor %}
 
-            </tbody>
+                </tbody>
 
-        </table>
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="text-center py-5">
+
+            <i class="bi bi-folder2-open"
+               style="font-size:80px;color:#94A3B8;"></i>
+
+            <h3 class="mt-3">
+
+                No Reports Found
+
+            </h3>
+
+            <p>
+
+                Upload your first meeting to generate AI reports.
+
+            </p>
+
+            <a
+                href="{{ url_for('upload.upload') }}"
+                class="btn btn-primary">
+
+                <i class="bi bi-cloud-upload-fill"></i>
+
+                Upload Meeting
+
+            </a>
+
+        </div>
+
+        {% endif %}
 
     </div>
-
-    {% else %}
-
-    <div class="alert alert-info">
-
-        No reports available.
-
-    </div>
-
-    {% endif %}
 
 </div>
+
+{% if reports %}
+
+<script>
+
+const search=document.getElementById("searchInput");
+
+search.addEventListener("keyup",function(){
+
+let value=this.value.toLowerCase();
+
+let rows=document.querySelectorAll("#reportTable tbody tr");
+
+rows.forEach(row=>{
+
+let file=row.cells[1].innerText.toLowerCase();
+
+row.style.display=file.includes(value)?"":"none";
+
+});
+
+});
+
+</script>
+
+{% endif %}
 
 {% endblock %}

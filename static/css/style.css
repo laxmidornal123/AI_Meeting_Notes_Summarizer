@@ -57,7 +57,12 @@ a{
     border-radius:10px;
 
 }
-
+.filename{
+    max-width:220px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
 /* Layout */
 
 .wrapper{
@@ -168,7 +173,15 @@ a{
     transform:translateX(5px);
 
 }
+.drag-active{
 
+border:3px dashed #0d6efd;
+
+background:#e9f3ff;
+
+transition:.3s;
+
+}
 .menu i{
 
     font-size:20px;
@@ -1566,6 +1579,21 @@ color:#94A3B8!important;
 .hero{
 
     text-align:center;
+
+}
+
+}
+@media(max-width:768px){
+
+.upload-box{
+
+padding:30px 20px;
+
+}
+
+.upload-box h3{
+
+font-size:22px;
 
 }
 

@@ -1,10 +1,11 @@
+html
 {% extends "layout.html" %}
 
 {% block content %}
 
 <div class="fade-in">
 
-    <!-- Profile Header -->
+    <!-- Hero -->
 
     <div class="hero">
 
@@ -13,23 +14,24 @@
             <div class="col-lg-8">
 
                 <h1>
-
                     👤 My Profile
-
                 </h1>
 
                 <p>
-
-                    Manage your account and view your AI Meeting statistics.
-
+                    Manage your account and monitor your AI Meeting Assistant activity.
                 </p>
 
             </div>
 
             <div class="col-lg-4 text-center">
 
-                <i class="bi bi-person-circle"
-                   style="font-size:130px;color:white;"></i>
+                <div class="rounded-circle bg-white d-inline-flex align-items-center justify-content-center"
+                     style="width:140px;height:140px;">
+
+                    <i class="bi bi-person-fill text-primary"
+                       style="font-size:70px;"></i>
+
+                </div>
 
             </div>
 
@@ -37,68 +39,109 @@
 
     </div>
 
-    <!-- Profile Card -->
+    <!-- Profile Information -->
 
-    <div class="glass">
+    <div class="glass p-4">
 
-        <div class="row">
+        <div class="row align-items-center">
 
             <div class="col-md-4 text-center">
 
-                <i class="bi bi-person-circle"
-                   style="font-size:120px;color:#3B82F6;"></i>
+                <div class="rounded-circle bg-primary d-inline-flex align-items-center justify-content-center mb-3"
+                     style="width:140px;height:140px;">
 
-                <h3 class="mt-3">
+                    <i class="bi bi-person-fill text-white"
+                       style="font-size:70px;"></i>
 
-                    {{ current_user.username }}
+                </div>
 
-                </h3>
+                <h3>{{ current_user.username }}</h3>
+
+                <span class="badge bg-success">
+
+                    Active User
+
+                </span>
 
             </div>
 
             <div class="col-md-8">
 
-                <table class="table table-dark">
+                <table class="table table-dark table-hover align-middle">
 
-                    <tr>
+                    <tbody>
 
-                        <th>Name</th>
+                        <tr>
 
-                        <td>{{ current_user.username }}</td>
+                            <th width="220">
 
-                    </tr>
+                                <i class="bi bi-person-fill"></i>
 
-                    <tr>
+                                Username
 
-                        <th>Email</th>
+                            </th>
 
-                        <td>{{ current_user.email }}</td>
+                            <td>{{ current_user.username }}</td>
 
-                    </tr>
+                        </tr>
 
-                    <tr>
+                        <tr>
 
-                        <th>Total Meetings</th>
+                            <th>
 
-                        <td>{{ total_meetings }}</td>
+                                <i class="bi bi-envelope-fill"></i>
 
-                    </tr>
+                                Email
 
-                    <tr>
+                            </th>
 
-                        <th>Reports Generated</th>
+                            <td>{{ current_user.email }}</td>
 
-                        <td>{{ total_meetings }}</td>
+                        </tr>
 
-                    </tr>
+                        <tr>
 
-                    <tr>
+                            <th>
 
-                        <th>AI Model</th>
+                                <i class="bi bi-mic-fill"></i>
 
-                        <td>Faster Whisper + Transformers</td>
+                                Meetings Uploaded
 
-                    </tr>
+                            </th>
+
+                            <td>{{ total_meetings }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                <i class="bi bi-file-earmark-pdf-fill"></i>
+
+                                Reports Generated
+
+                            </th>
+
+                            <td>{{ total_meetings }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                <i class="bi bi-stars"></i>
+
+                                AI Model
+
+                            </th>
+
+                            <td>Faster Whisper + Gemini AI</td>
+
+                        </tr>
+
+                    </tbody>
 
                 </table>
 
@@ -112,7 +155,7 @@
 
     <div class="row g-4 mt-4">
 
-        <div class="col-md-4">
+        <div class="col-lg-4 col-md-6">
 
             <div class="stats-card">
 
@@ -126,11 +169,19 @@
 
                 <p>Meetings Uploaded</p>
 
+                <small class="text-success">
+
+                    <i class="bi bi-arrow-up"></i>
+
+                    Latest Data
+
+                </small>
+
             </div>
 
         </div>
 
-        <div class="col-md-4">
+        <div class="col-lg-4 col-md-6">
 
             <div class="stats-card">
 
@@ -144,11 +195,19 @@
 
                 <p>PDF Reports</p>
 
+                <small class="text-success">
+
+                    <i class="bi bi-check-circle"></i>
+
+                    Generated
+
+                </small>
+
             </div>
 
         </div>
 
-        <div class="col-md-4">
+        <div class="col-lg-4 col-md-12">
 
             <div class="stats-card">
 
@@ -158,11 +217,131 @@
 
                 </div>
 
-                <h2>100%</h2>
+                <h2>Gemini</h2>
 
-                <p>AI Powered</p>
+                <p>AI Model</p>
+
+                <small class="text-success">
+
+                    <i class="bi bi-cpu-fill"></i>
+
+                    Active
+
+                </small>
 
             </div>
+
+        </div>
+
+    </div>
+
+    <!-- Recent Activity -->
+
+    <div class="glass mt-5 p-4">
+
+        <h3>
+
+            <i class="bi bi-clock-history"></i>
+
+            Recent Activity
+
+        </h3>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="alert alert-primary">
+
+                    🎤 Meetings
+
+                    <h4>{{ total_meetings }}</h4>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="alert alert-success">
+
+                    📄 Reports
+
+                    <h4>{{ total_meetings }}</h4>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="alert alert-warning">
+
+                    🤖 AI Summaries
+
+                    <h4>{{ total_meetings }}</h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Quick Actions -->
+
+    <div class="glass mt-5 p-4">
+
+        <h3>
+
+            <i class="bi bi-lightning-charge-fill"></i>
+
+            Quick Actions
+
+        </h3>
+
+        <hr>
+
+        <div class="d-flex justify-content-center flex-wrap gap-3">
+
+            <a href="{{ url_for('upload.upload') }}"
+               class="btn btn-primary">
+
+                <i class="bi bi-cloud-upload-fill"></i>
+
+                Upload Meeting
+
+            </a>
+
+            <a href="{{ url_for('history.history') }}"
+               class="btn btn-success">
+
+                <i class="bi bi-clock-history"></i>
+
+                History
+
+            </a>
+
+            <a href="{{ url_for('settings.settings') }}"
+               class="btn btn-warning">
+
+                <i class="bi bi-gear-fill"></i>
+
+                Settings
+
+            </a>
+
+            <a href="{{ url_for('dashboard') }}"
+               class="btn btn-dark">
+
+                <i class="bi bi-house-fill"></i>
+
+                Dashboard
+
+            </a>
 
         </div>
 

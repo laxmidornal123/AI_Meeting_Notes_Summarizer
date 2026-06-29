@@ -1,33 +1,310 @@
+html
 {% extends "layout.html" %}
 
 {% block content %}
 
-<div class="container mt-4">
+<div class="fade-in">
 
-    <h2>
-        <i class="bi bi-gear-fill"></i>
-        Settings
-    </h2>
+    <!-- Hero -->
 
-    <hr>
+    <div class="hero">
 
-    <div class="card p-4">
+        <h1>
 
-        <h4>Appearance</h4>
+            <i class="bi bi-gear-fill"></i>
 
-        <p>Dark/Light mode will be available here.</p>
+            Settings
+
+        </h1>
+
+        <p>
+
+            Manage your AI Meeting Assistant preferences and account settings.
+
+        </p>
+
+    </div>
+
+    <!-- Settings Cards -->
+
+    <div class="row g-4">
+
+        <!-- Account -->
+
+        <div class="col-lg-6">
+
+            <div class="glass p-4 h-100">
+
+                <h4>
+
+                    <i class="bi bi-person-fill"></i>
+
+                    Account
+
+                </h4>
+
+                <hr>
+
+                <table class="table table-dark table-borderless">
+
+                    <tr>
+
+                        <th>Username</th>
+
+                        <td>{{ current_user.username }}</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>Email</th>
+
+                        <td>{{ current_user.email }}</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>Status</th>
+
+                        <td>
+
+                            <span class="badge bg-success">
+
+                                Active
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- AI Configuration -->
+
+        <div class="col-lg-6">
+
+            <div class="glass p-4 h-100">
+
+                <h4>
+
+                    <i class="bi bi-cpu-fill"></i>
+
+                    AI Configuration
+
+                </h4>
+
+                <hr>
+
+                <table class="table table-dark table-borderless">
+
+                    <tr>
+
+                        <th>Speech Model</th>
+
+                        <td>Faster Whisper</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>Summary Model</th>
+
+                        <td>Gemini AI</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>Report Format</th>
+
+                        <td>PDF</td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- Appearance -->
+
+        <div class="col-lg-6">
+
+            <div class="glass p-4 h-100">
+
+                <h4>
+
+                    <i class="bi bi-palette-fill"></i>
+
+                    Appearance
+
+                </h4>
+
+                <hr>
+
+                <div class="form-check form-switch">
+
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        disabled>
+
+                    <label class="form-check-label">
+
+                        Dark Mode (Coming Soon)
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Language -->
+
+        <div class="col-lg-6">
+
+            <div class="glass p-4 h-100">
+
+                <h4>
+
+                    <i class="bi bi-translate"></i>
+
+                    Language
+
+                </h4>
+
+                <hr>
+
+                <select class="form-select" disabled>
+
+                    <option>English</option>
+                    <option>Hindi</option>
+                    <option>Marathi</option>
+
+                </select>
+
+                <small class="text-muted">
+
+                    Multi-language support coming soon.
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Application Info -->
+
+    <div class="glass mt-5 p-4">
+
+        <h4>
+
+            <i class="bi bi-info-circle-fill"></i>
+
+            Application Information
+
+        </h4>
 
         <hr>
 
-        <h4>Notifications</h4>
+        <div class="row">
 
-        <p>Notification preferences.</p>
+            <div class="col-md-4">
+
+                <strong>Version</strong>
+
+                <p>1.0.0</p>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <strong>Framework</strong>
+
+                <p>Flask</p>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <strong>Database</strong>
+
+                <p>SQLite</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Quick Actions -->
+
+    <div class="glass mt-5 p-4">
+
+        <h4>
+
+            <i class="bi bi-lightning-fill"></i>
+
+            Quick Actions
+
+        </h4>
 
         <hr>
 
-        <h4>Language</h4>
+        <div class="d-flex justify-content-center flex-wrap gap-3">
 
-        <p>Application language.</p>
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="btn btn-dark">
+
+                <i class="bi bi-house-fill"></i>
+
+                Dashboard
+
+            </a>
+
+            <a
+                href="{{ url_for('profile.profile') }}"
+                class="btn btn-primary">
+
+                <i class="bi bi-person-fill"></i>
+
+                Profile
+
+            </a>
+
+            <a
+                href="{{ url_for('history.history') }}"
+                class="btn btn-success">
+
+                <i class="bi bi-clock-history"></i>
+
+                History
+
+            </a>
+
+            <a
+                href="{{ url_for('upload.upload') }}"
+                class="btn btn-warning">
+
+                <i class="bi bi-cloud-upload-fill"></i>
+
+                Upload
+
+            </a>
+
+        </div>
 
     </div>
 

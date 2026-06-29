@@ -1,11 +1,11 @@
+html
 {% extends "layout.html" %}
 
 {% block content %}
 
 <div class="fade-in">
 
-    <!-- Header -->
-
+    <!-- Hero -->
     <div class="hero">
 
         <h1>🤖 AI Analysis Completed</h1>
@@ -13,6 +13,76 @@
         <p>
             Your meeting has been successfully processed.
         </p>
+
+    </div>
+
+    <!-- Statistics -->
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-3">
+
+            <div class="stats-card">
+
+                <div class="stats-icon blue">
+                    <i class="bi bi-file-earmark-text"></i>
+                </div>
+
+                <h2>{{ transcript.split()|length }}</h2>
+
+                <p>Total Words</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stats-card">
+
+                <div class="stats-icon green">
+                    <i class="bi bi-stars"></i>
+                </div>
+
+                <h2>AI</h2>
+
+                <p>Summary Generated</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stats-card">
+
+                <div class="stats-icon orange">
+                    <i class="bi bi-translate"></i>
+                </div>
+
+                <h2>Auto</h2>
+
+                <p>Language Detection</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stats-card">
+
+                <div class="stats-icon purple">
+                    <i class="bi bi-clock"></i>
+                </div>
+
+                <h2>{{ meeting.upload_date.strftime("%H:%M") }}</h2>
+
+                <p>Generated At</p>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -30,7 +100,7 @@
 
             </h3>
 
-            <span class="badge-custom">
+            <span class="badge bg-primary">
 
                 Speech to Text
 
@@ -40,7 +110,19 @@
 
         <hr>
 
-        <pre>{{ transcript }}</pre>
+        <details>
+
+            <summary class="btn btn-outline-primary mb-3">
+
+                <i class="bi bi-eye"></i>
+
+                Show Transcript
+
+            </summary>
+
+            <pre>{{ transcript }}</pre>
+
+        </details>
 
     </div>
 
@@ -58,17 +140,21 @@
 
             </h3>
 
-            <span class="badge-custom">
+            <button
+                class="btn btn-outline-light btn-sm"
+                onclick="copySummary()">
 
-                Generated
+                <i class="bi bi-clipboard"></i>
 
-            </span>
+                Copy
+
+            </button>
 
         </div>
 
         <hr>
 
-        <p>
+        <p id="summaryText">
 
             {{ summary }}
 
@@ -92,13 +178,19 @@
 
                 <hr>
 
-                <ul>
+                <ul class="list-group list-group-flush">
 
-                    <li>Meeting successfully transcribed.</li>
+                    <li class="list-group-item">
+                        ✅ Meeting Successfully Transcribed
+                    </li>
 
-                    <li>AI generated summary.</li>
+                    <li class="list-group-item">
+                        🤖 AI Summary Generated
+                    </li>
 
-                    <li>Ready for PDF export.</li>
+                    <li class="list-group-item">
+                        📄 PDF Ready for Download
+                    </li>
 
                 </ul>
 
@@ -118,13 +210,19 @@
 
                 <hr>
 
-                <ul>
+                <ul class="list-group list-group-flush">
 
-                    <li>Review AI Summary.</li>
+                    <li class="list-group-item">
+                        Review AI Summary
+                    </li>
 
-                    <li>Download PDF.</li>
+                    <li class="list-group-item">
+                        Download PDF Report
+                    </li>
 
-                    <li>Share with your team.</li>
+                    <li class="list-group-item">
+                        Share with Your Team
+                    </li>
 
                 </ul>
 
@@ -136,10 +234,10 @@
 
     <!-- Buttons -->
 
-    <div class="text-center mt-5">
+    <div class="d-flex justify-content-center flex-wrap gap-3 mt-5">
 
         <a href="{{ url_for('history.download_report', id=meeting.id) }}"
-           class="btn btn-success m-2">
+           class="btn btn-success">
 
             <i class="bi bi-download"></i>
 
@@ -148,16 +246,16 @@
         </a>
 
         <a href="{{ url_for('upload.upload') }}"
-           class="btn btn-primary m-2">
+           class="btn btn-primary">
 
             <i class="bi bi-cloud-upload-fill"></i>
 
-            Upload Another
+            New Meeting
 
         </a>
 
         <a href="{{ url_for('history.history') }}"
-           class="btn btn-warning m-2">
+           class="btn btn-warning">
 
             <i class="bi bi-clock-history"></i>
 
@@ -165,8 +263,31 @@
 
         </a>
 
+        <a href="{{ url_for('dashboard') }}"
+           class="btn btn-dark">
+
+            <i class="bi bi-house-fill"></i>
+
+            Dashboard
+
+        </a>
+
     </div>
 
 </div>
+
+<script>
+
+function copySummary(){
+
+    navigator.clipboard.writeText(
+        document.getElementById("summaryText").innerText
+    );
+
+    alert("Summary copied successfully!");
+
+}
+
+</script>
 
 {% endblock %}

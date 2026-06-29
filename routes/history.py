@@ -37,10 +37,11 @@ def meeting(id):
     user_id=current_user.id
 ).all()
     return render_template(
-        "result.html",
-        transcript=meeting.transcript,
-        summary=meeting.summary
-    )
+    "result.html",
+    transcript=meeting.transcript,
+    summary=meeting.summary,
+    meeting=meeting
+)
 @history_bp.route("/delete/<int:id>")
 @login_required
 def delete_meeting(id):
@@ -48,13 +49,13 @@ def delete_meeting(id):
     meeting = Meeting.query.get_or_404(id)
 
     if meeting.user_id != current_user.id:
-        flash("Unauthorized")
+        flash("Unauthorized access.", "danger")
         return redirect(url_for("history.history"))
 
     db.session.delete(meeting)
     db.session.commit()
 
-    flash("Meeting deleted successfully.")
+    flash("Meeting deleted successfully.", "success")
 
     return redirect(url_for("history.history"))
 

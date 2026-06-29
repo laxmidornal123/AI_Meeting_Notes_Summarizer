@@ -1,3 +1,4 @@
+html
 {% extends "layout.html" %}
 
 {% block content %}
@@ -26,6 +27,26 @@
 
                     </p>
 
+                    <div class="mb-3">
+
+                        <span class="badge bg-primary me-2">AI Powered</span>
+
+                        <span class="badge bg-success me-2">Whisper</span>
+
+                        <span class="badge bg-warning text-dark me-2">Gemini</span>
+
+                        <span class="badge bg-danger">PDF Reports</span>
+
+                    </div>
+
+                </div>
+
+                <div class="alert alert-primary">
+
+                    <i class="bi bi-info-circle-fill"></i>
+
+                    Create your account to start generating AI meeting summaries.
+
                 </div>
 
                 <form method="POST">
@@ -38,12 +59,22 @@
 
                         </label>
 
-                        <input
-                            type="text"
-                            name="username"
-                            class="form-control"
-                            placeholder="Enter Username"
-                            required>
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+
+                                <i class="bi bi-person-fill"></i>
+
+                            </span>
+
+                            <input
+                                type="text"
+                                name="username"
+                                class="form-control"
+                                placeholder="Enter Username"
+                                required>
+
+                        </div>
 
                     </div>
 
@@ -55,12 +86,22 @@
 
                         </label>
 
-                        <input
-                            type="email"
-                            name="email"
-                            class="form-control"
-                            placeholder="Enter Email"
-                            required>
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+
+                                <i class="bi bi-envelope-fill"></i>
+
+                            </span>
+
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control"
+                                placeholder="Enter Email"
+                                required>
+
+                        </div>
 
                     </div>
 
@@ -73,6 +114,12 @@
                         </label>
 
                         <div class="input-group">
+
+                            <span class="input-group-text">
+
+                                <i class="bi bi-lock-fill"></i>
+
+                            </span>
 
                             <input
                                 type="password"
@@ -106,6 +153,12 @@
 
                         <div class="input-group">
 
+                            <span class="input-group-text">
+
+                                <i class="bi bi-shield-lock-fill"></i>
+
+                            </span>
+
                             <input
                                 type="password"
                                 id="confirm_password"
@@ -127,31 +180,31 @@
 
                     </div>
 
-                    <!-- Password Strength -->
+                    <div class="progress mb-2">
 
-                    <div class="progress mb-3">
-
-                        <div id="strengthBar"
-                             class="progress-bar"
-                             style="width:0%">
+                        <div
+                            id="strengthBar"
+                            class="progress-bar"
+                            style="width:0%">
 
                         </div>
 
                     </div>
 
-                    <small id="strengthText"
-                           class="text-muted">
+                    <small
+                        id="strengthText"
+                        class="text-muted">
 
                         Password Strength
 
                     </small>
 
                     <button
-                        class="btn btn-primary w-100 mt-4">
+                        class="btn btn-primary btn-lg w-100 mt-4">
 
                         <i class="bi bi-person-check-fill"></i>
 
-                        Register
+                        Create Account
 
                     </button>
 
@@ -171,6 +224,14 @@
 
                 </div>
 
+                <hr>
+
+                <p class="text-center text-muted small mb-0">
+
+                    AI Meeting Notes Summarizer © 2026
+
+                </p>
+
             </div>
 
         </div>
@@ -183,58 +244,61 @@
 
 function togglePassword(id){
 
-let x=document.getElementById(id);
+    let x=document.getElementById(id);
 
-if(x.type==="password")
+    if(x.type==="password")
 
-x.type="text";
+        x.type="text";
 
-else
+    else
 
-x.type="password";
+        x.type="password";
 
 }
 
 function checkStrength(){
 
-let pass=document.getElementById("password").value;
+    let pass=document.getElementById("password").value;
 
-let bar=document.getElementById("strengthBar");
+    let bar=document.getElementById("strengthBar");
 
-let text=document.getElementById("strengthText");
+    let text=document.getElementById("strengthText");
 
-let score=0;
+    let score=0;
 
-if(pass.length>=8) score++;
+    if(pass.length>=8) score++;
 
-if(/[A-Z]/.test(pass)) score++;
-if(/[a-z]/.test(pass)) score++;
-if(/[0-9]/.test(pass)) score++;
-if(/[^A-Za-z0-9]/.test(pass)) score++;
+    if(/[A-Z]/.test(pass)) score++;
 
-if(score<=2){
+    if(/[a-z]/.test(pass)) score++;
 
-bar.style.width="30%";
-bar.style.background="#EF4444";
-text.innerHTML="Weak Password";
+    if(/[0-9]/.test(pass)) score++;
 
-}
+    if(/[^A-Za-z0-9]/.test(pass)) score++;
 
-else if(score<=4){
+    if(score<=2){
 
-bar.style.width="70%";
-bar.style.background="#F59E0B";
-text.innerHTML="Medium Password";
+        bar.style.width="30%";
+        bar.style.background="#EF4444";
+        text.innerHTML="Weak Password";
 
-}
+    }
 
-else{
+    else if(score<=4){
 
-bar.style.width="100%";
-bar.style.background="#10B981";
-text.innerHTML="Strong Password";
+        bar.style.width="70%";
+        bar.style.background="#F59E0B";
+        text.innerHTML="Medium Password";
 
-}
+    }
+
+    else{
+
+        bar.style.width="100%";
+        bar.style.background="#10B981";
+        text.innerHTML="Strong Password";
+
+    }
 
 }
 

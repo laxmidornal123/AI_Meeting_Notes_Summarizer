@@ -174,24 +174,44 @@
 
         <!-- Flash Messages -->
 
-        {% with messages = get_flashed_messages() %}
+      <!-- Toast Notifications -->
 
-            {% if messages %}
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index:9999;">
 
-                {% for message in messages %}
+{% with messages = get_flashed_messages(with_categories=true) %}
 
-                    <div class="alert alert-success mt-3">
+{% if messages %}
 
-                        {{ message }}
+{% for category,message in messages %}
 
-                    </div>
+<div class="toast show text-bg-{% if category=='success' %}success{% elif category=='danger' %}danger{% elif category=='warning' %}warning{% else %}primary{% endif %} border-0 mb-2">
 
-                {% endfor %}
+<div class="d-flex">
 
-            {% endif %}
+<div class="toast-body">
 
-        {% endwith %}
+{{ message }}
 
+</div>
+
+<button
+type="button"
+class="btn-close btn-close-white me-2 m-auto"
+data-bs-dismiss="toast">
+
+</button>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+{% endwith %}
+
+</div>
         <!-- Page Content -->
 
         <div class="content">
@@ -219,13 +239,45 @@ menuBtn.addEventListener("click", function () {
 });
 
 // Notification
-
 function showNotification(){
 
-    alert("🔔 No new notifications");
+const toast=document.createElement("div");
+
+toast.className="toast align-items-center text-bg-primary border-0 position-fixed top-0 end-0 m-3 show";
+
+toast.style.zIndex="9999";
+
+toast.innerHTML=`
+
+<div class="d-flex">
+
+<div class="toast-body">
+
+ No new notifications
+
+</div>
+
+<button class="btn-close btn-close-white me-2 m-auto"></button>
+
+</div>
+
+`;
+
+document.body.appendChild(toast);
+
+toast.querySelector(".btn-close").onclick=function(){
+
+toast.remove();
+
+};
+
+setTimeout(()=>{
+
+toast.remove();
+
+},3000);
 
 }
-
 // Dark / Light Mode
 
 function toggleTheme(){
@@ -247,8 +299,40 @@ function toggleTheme(){
     }
 
 }
+document.querySelectorAll(".toast").forEach(function(t){
+
+new bootstrap.Toast(t,{delay:3000}).show();
+
+});
 
 </script>
+<footer class="text-center mt-5 py-4">
+
+<hr>
+
+<p class="text-muted">
+
+AI Meeting Notes Summarizer
+
+|
+
+Flask
+
+|
+
+Whisper
+
+|
+
+Gemini AI
+
+|
+
+© 2026
+
+</p>
+
+</footer>
 </body>
 
 </html>

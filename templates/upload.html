@@ -33,12 +33,25 @@
 
                         <h3>Drag & Drop Audio Here</h3>
 
-                        <p>
+                        <div class="mt-3">
 
-                            Supports MP3, WAV, M4A, OGG, FLAC
+<span class="badge bg-primary me-2">MP3</span>
 
-                        </p>
+<span class="badge bg-success me-2">WAV</span>
 
+<span class="badge bg-warning text-dark me-2">M4A</span>
+
+<span class="badge bg-danger me-2">OGG</span>
+
+<span class="badge bg-info">FLAC</span>
+
+</div>
+<p class="text-muted mt-3">
+
+Maximum upload size:
+<strong>100 MB</strong>
+
+</p>
                         <input
                             type="file"
                             name="audio"
@@ -76,7 +89,7 @@
 
                             <i class="bi bi-stars"></i>
 
-                            Upload & Generate Summary
+                            Generate Transcript & Summary
 
                         </button>
 
@@ -137,19 +150,18 @@
 
 <script>
 
-const input=document.getElementById("audio");
+input.onchange = function () {
 
-const filename=document.getElementById("filename");
+    if (this.files.length > 0) {
 
-const form=document.getElementById("uploadForm");
+        const file = this.files[0];
 
-input.onchange=function(){
+        const size = (file.size / (1024 * 1024)).toFixed(2);
 
-if(this.files.length>0){
+        filename.innerHTML =
+            `📄 ${file.name}<br><small>${size} MB</small>`;
 
-filename.innerHTML="📄 "+this.files[0].name;
-
-}
+    }
 
 }
 
@@ -160,7 +172,35 @@ let modal=new bootstrap.Modal(document.getElementById("loadingModal"));
 modal.show();
 
 }
+const dropArea = document.getElementById("drop-area");
 
+dropArea.addEventListener("dragover", function(e){
+
+    e.preventDefault();
+
+    this.classList.add("drag-active");
+
+});
+
+dropArea.addEventListener("dragleave", function(){
+
+    this.classList.remove("drag-active");
+
+});
+
+dropArea.addEventListener("drop", function(){
+
+    this.classList.remove("drag-active");
+
+});
+const ext = file.name.split('.').pop().toUpperCase();
+
+filename.innerHTML =
+
+📄 ${file.name}<br>
+
+<small>${size} MB • ${ext}</small>
+;
 </script>
 
 {% endblock %}
