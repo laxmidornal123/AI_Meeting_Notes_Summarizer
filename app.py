@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, render_template
 from routes.profile import profile_bp
 from config import Config
+import os
 
 from models import db, login_manager
 from flask_login import current_user, login_required
@@ -72,4 +73,9 @@ def dashboard():
     )
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(
+        host="0.0.0.0",
+        port=port,
+        debug=False
+    )
