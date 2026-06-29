@@ -1,36 +1,30 @@
-from transformers import pipeline
+import os
+import google.generativeai as genai
 
-summarizer = None
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-
-def get_summarizer():
-    global summarizer
-
-    if summarizer is None:
-        print("Loading AI Summarizer...")
-
-        summarizer = pipeline(
-            "summarization",
-            model="sshleifer/distilbart-cnn-12-6"
-        )
-
-        print("Summarizer Loaded")
-
-    return summarizer
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 
 def summarize_text(text):
 
-    if len(text) < 100:
+    if len(text.strip()) < 50:
         return text
 
-    model = get_summarizer()
+    prompt = f"""
+You are an AI Meeting Assistant.
 
-    result = model(
-        text,
-        max_length=150,
-        min_length=40,
-        do_sample=False
-    )
+Summarize the following meeting transcript.
 
-    return result[0]["summary_text"]
+Provide:
+1. Summary
+2. Key Points
+3. Action Items
+
+Transcript:
+{text}
+"""
+
+    response = model.generate_content(prompt)
+
+    return response.text
