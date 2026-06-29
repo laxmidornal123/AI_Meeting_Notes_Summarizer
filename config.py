@@ -10,7 +10,12 @@ class Config:
         "change_this_to_a_long_random_secret_key"
     )
 
-    SQLALCHEMY_DATABASE_URI = (
+    database_url = os.getenv("DATABASE_URL")
+
+    if database_url:
+        SQLALCHEMY_DATABASE_URI = database_url
+    else:
+        SQLALCHEMY_DATABASE_URI = (
         "sqlite:///" +
         os.path.join(BASE_DIR, "app.db")
     )
