@@ -6,154 +6,177 @@
 
     <!-- Header -->
     <div class="hero">
-
         <h1>📚 Meeting History</h1>
-
-        <p>
-            View, search, and manage all your AI meeting reports.
-        </p>
-
+        <p>View, search and manage all your AI meeting reports.</p>
     </div>
 
     <!-- Search -->
-    <div class="search-box">
-
-        <i class="bi bi-search"></i>
+    <div class="search-wrapper">
+        <i class="bi bi-search search-icon"></i>
 
         <input
             type="text"
             id="searchInput"
+            class="search-input"
             placeholder="Search meeting by filename...">
+    </div>
+
+    {% if meetings %}
+
+    <!-- Desktop Table -->
+    <div class="table-container desktop-table">
+
+        <table class="table table-dark table-hover align-middle"
+               id="historyTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Filename</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for meeting in meetings %}
+
+            <tr>
+
+                <td>{{meeting.id}}</td>
+
+                <td class="filename">
+                    {{meeting.filename}}
+                </td>
+
+                <td>
+                    {{meeting.upload_date.strftime("%d-%m-%Y %H:%M")}}
+                </td>
+
+                <td>
+
+                    <a href="/meeting/{{meeting.id}}" class="action-btn action-view">
+                        <i class="bi bi-eye-fill"></i>
+                    </a>
+
+                    <a href="/download/{{meeting.id}}" class="action-btn action-download">
+                        <i class="bi bi-download"></i>
+                    </a>
+
+                    <a href="/delete/{{meeting.id}}"
+                       onclick="return confirm('Delete this meeting?')"
+                       class="action-btn action-delete">
+
+                        <i class="bi bi-trash-fill"></i>
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
 
     </div>
 
-    <!-- Table -->
+    <!-- Mobile Cards -->
 
-    <div class="table-container">
+    <div class="mobile-history">
 
-        {% if meetings %}
+        {% for meeting in meetings %}
 
-        <div class="table-responsive">
+        <div class="history-card">
 
-            <table class="table table-dark table-hover align-middle" id="historyTable">
+            <h5>
+                📄 {{meeting.filename}}
+            </h5>
 
-                <thead>
+            <p>
+                <i class="bi bi-calendar"></i>
 
-                    <tr>
+                {{meeting.upload_date.strftime("%d-%m-%Y %H:%M")}}
+            </p>
 
-                        <th>ID</th>
+            <div class="history-actions">
 
-                        <th>Filename</th>
+                <a href="/meeting/{{meeting.id}}" class="action-btn action-view">
+                    <i class="bi bi-eye-fill"></i>
+                </a>
 
-                        <th>Date</th>
+                <a href="/download/{{meeting.id}}" class="action-btn action-download">
+                    <i class="bi bi-download"></i>
+                </a>
 
-                        <th>Actions</th>
+                <a href="/delete/{{meeting.id}}"
+                   onclick="return confirm('Delete this meeting?')"
+                   class="action-btn action-delete">
 
-                    </tr>
+                    <i class="bi bi-trash-fill"></i>
 
-                </thead>
+                </a>
 
-                <tbody>
-
-                {% for meeting in meetings %}
-
-                    <tr>
-
-                        <td>{{ meeting.id }}</td>
-
-                        <td>{{ meeting.filename }}</td>
-
-                        <td>{{ meeting.upload_date.strftime("%d-%m-%Y %H:%M") }}</td>
-
-                        <td>
-
-                            <!-- View -->
-
-                            <a href="/meeting/{{ meeting.id }}"
-                               class="action-btn action-view"
-                               title="View">
-
-                                <i class="bi bi-eye-fill"></i>
-
-                            </a>
-
-                            <!-- Download -->
-
-                            <a href="/download/{{ meeting.id }}"
-                               class="action-btn action-download"
-                               title="Download">
-
-                                <i class="bi bi-download"></i>
-
-                            </a>
-
-                            <!-- Delete -->
-
-                            <a href="/delete/{{ meeting.id }}"
-                               class="action-btn action-delete"
-                               onclick="return confirm('Delete this meeting?')"
-                               title="Delete">
-
-                                <i class="bi bi-trash-fill"></i>
-
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-                {% endfor %}
-
-                </tbody>
-
-            </table>
+            </div>
 
         </div>
 
-        {% else %}
-
-        <div class="empty-state">
-
-            <i class="bi bi-folder2-open"></i>
-
-            <h3>No Meetings Found</h3>
-
-            <p>Upload your first meeting to see it here.</p>
-
-            <a href="{{ url_for('upload.upload') }}"
-               class="btn btn-primary mt-3">
-
-                Upload Meeting
-
-            </a>
-
-        </div>
-
-        {% endif %}
+        {% endfor %}
 
     </div>
+
+    {% else %}
+
+    <div class="empty-state">
+
+        <i class="bi bi-folder2-open"></i>
+
+        <h3>No Meetings Found</h3>
+
+        <p>Upload your first meeting.</p>
+
+        <a href="{{url_for('upload.upload')}}" class="btn btn-primary">
+
+            Upload Meeting
+
+        </a>
+
+    </div>
+
+    {% endif %}
 
 </div>
 
-<!-- Search Script -->
-
 <script>
 
-const input = document.getElementById("searchInput");
+const input=document.getElementById("searchInput");
 
-input.addEventListener("keyup", function () {
+input.addEventListener("keyup",()=>{
 
-    let filter = input.value.toLowerCase();
+let filter=input.value.toLowerCase();
 
-    let rows = document.querySelectorAll("#historyTable tbody tr");
+document.querySelectorAll("#historyTable tbody tr").forEach(row=>{
 
-    rows.forEach(row => {
+let file=row.cells[1].innerText.toLowerCase();
 
-        let filename = row.cells[1].innerText.toLowerCase();
+row.style.display=file.includes(filter)?"":"none";
 
-        row.style.display = filename.includes(filter) ? "" : "none";
+});
 
-    });
+document.querySelectorAll(".history-card").forEach(card=>{
+
+let file=card.querySelector("h5").innerText.toLowerCase();
+
+card.style.display=file.includes(filter)?"block":"none";
+
+});
 
 });
 
